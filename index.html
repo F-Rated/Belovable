@@ -4,17 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Belovable — Know Your Unfair Advantage</title>
-  <meta name="description" content="Become Belovable for the world by using your unfair advantage. Paste your LinkedIn URL and get a personalized startup blueprint powered by AI."/>
-
+  <meta name="description" content="Become Belovable for the world by using your unfair advantage."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
-
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    /* ── RESET & BASE ─────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { height: 100%; scroll-behavior: smooth; }
-
+    html, body { height: 100%; }
     body {
       background: #080809;
       color: #f0eee8;
@@ -25,7 +21,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── SCREENS ───────────────────────────────────── */
     .screen {
       display: none;
       flex-direction: column;
@@ -38,13 +33,12 @@
       animation: fadeUp 0.45s ease both;
     }
     .screen.active { display: flex; }
-
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── HERO SCREEN ────────────────────────────────── */
+    /* HERO */
     .wordmark {
       font-size: 0.68rem;
       font-weight: 700;
@@ -53,7 +47,6 @@
       color: rgba(255,255,255,0.22);
       margin-bottom: 60px;
     }
-
     h1 {
       font-size: clamp(2.8rem, 7vw, 5.6rem);
       font-weight: 800;
@@ -62,24 +55,20 @@
       max-width: 860px;
       margin-bottom: 22px;
     }
-
     .grad {
       background: linear-gradient(130deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
     .hero-sub {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: rgba(255,255,255,0.35);
-      font-weight: 400;
       margin-bottom: 52px;
-      letter-spacing: 0.005em;
       line-height: 1.6;
     }
 
-    /* ── INPUT ROW ──────────────────────────────────── */
+    /* INPUT ROW */
     .input-row {
       display: flex;
       gap: 10px;
@@ -87,7 +76,6 @@
       max-width: 660px;
       align-items: center;
     }
-
     #url-input {
       flex: 1;
       background: rgba(255,255,255,0.055);
@@ -96,21 +84,14 @@
       color: #fff;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.95rem;
-      font-weight: 400;
       padding: 17px 26px;
       outline: none;
       transition: border-color 0.25s, background 0.25s;
       min-width: 0;
     }
     #url-input::placeholder { color: rgba(255,255,255,0.22); }
-    #url-input:focus {
-      border-color: rgba(56, 189, 248, 0.5);
-      background: rgba(56, 189, 248, 0.04);
-    }
-    #url-input.error {
-      border-color: rgba(239, 68, 68, 0.55);
-      animation: shake 0.38s ease;
-    }
+    #url-input:focus { border-color: rgba(56,189,248,0.5); background: rgba(56,189,248,0.04); }
+    #url-input.error { border-color: rgba(239,68,68,0.55); animation: shake 0.38s ease; }
     @keyframes shake {
       0%,100% { transform: translateX(0); }
       25%      { transform: translateX(-7px); }
@@ -132,35 +113,37 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      letter-spacing: 0.01em;
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 0 0 0 rgba(14,116,144,0);
     }
-    .btn-generate:hover {
-      background: #0891b2;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(14,116,144,0.35);
-    }
-    .btn-generate:active { transform: translateY(0); box-shadow: none; }
-    .btn-generate svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .btn-generate:hover { background: #0891b2; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(14,116,144,0.35); }
+    .btn-generate:active { transform: translateY(0); }
+    .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-generate svg { width: 14px; height: 14px; }
 
-    /* ── HERO FOOTER ──────────────────────────────── */
     .hero-footer {
-      margin-top: 32px;
-      font-size: 0.72rem;
+      margin-top: 28px;
+      font-size: 0.7rem;
       color: rgba(255,255,255,0.18);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       line-height: 1.8;
     }
 
-    /* ── GENERATING SCREEN ───────────────────────── */
-    .gen-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
+    .err-banner {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 20px;
+      background: rgba(239,68,68,0.09);
+      border: 1px solid rgba(239,68,68,0.22);
+      border-radius: 12px;
+      color: #fca5a5;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      max-width: 660px;
+      width: 100%;
+      text-align: left;
     }
 
+    /* GENERATING */
     .spinner-ring {
       width: 46px; height: 46px;
       border-radius: 50%;
@@ -170,7 +153,6 @@
       margin-bottom: 30px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .gen-status {
       font-size: 0.68rem;
       font-weight: 700;
@@ -179,45 +161,37 @@
       color: #38bdf8;
       margin-bottom: 10px;
     }
-
-    .gen-sub {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.25);
-      font-style: italic;
-    }
-
+    .gen-sub { font-size: 0.95rem; color: rgba(255,255,255,0.25); font-style: italic; }
     .gen-steps {
       margin-top: 36px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 10px;
-      max-width: 340px;
+      gap: 12px;
+      max-width: 320px;
       width: 100%;
     }
-
     .gen-step {
       display: flex;
       align-items: center;
       gap: 12px;
       font-size: 0.82rem;
-      color: rgba(255,255,255,0.28);
+      color: rgba(255,255,255,0.25);
       transition: color 0.4s;
     }
-    .gen-step.done  { color: rgba(255,255,255,0.65); }
-    .gen-step.active{ color: rgba(255,255,255,0.9); }
-
+    .gen-step.done   { color: rgba(255,255,255,0.6); }
+    .gen-step.active { color: rgba(255,255,255,0.92); }
     .step-dot {
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.12);
       flex-shrink: 0;
       transition: background 0.4s;
     }
     .gen-step.done   .step-dot { background: #34d399; }
     .gen-step.active .step-dot { background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
 
-    /* ── REPORT SCREEN ───────────────────────────── */
+    /* REPORT */
     #report-screen {
       align-items: flex-start;
       justify-content: flex-start;
@@ -225,13 +199,7 @@
       min-height: auto;
       padding: 72px 24px 120px;
     }
-
-    .report-inner {
-      width: 100%;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
+    .report-inner { width: 100%; max-width: 760px; margin: 0 auto; }
     .report-topbar {
       display: flex;
       justify-content: space-between;
@@ -240,7 +208,6 @@
       margin-bottom: 10px;
       flex-wrap: wrap;
     }
-
     .report-wordmark {
       font-size: 0.62rem;
       font-weight: 700;
@@ -249,14 +216,12 @@
       color: rgba(255,255,255,0.2);
       margin-bottom: 8px;
     }
-
     .report-title {
       font-size: clamp(1.6rem, 3.5vw, 2.4rem);
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.12;
     }
-
     .btn-restart {
       background: none;
       border: 1px solid rgba(255,255,255,0.1);
@@ -269,18 +234,11 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      letter-spacing: 0.02em;
       transition: color 0.2s, border-color 0.2s;
       margin-top: 4px;
     }
     .btn-restart:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
-
-    .cents-row {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin: 22px 0 48px;
-    }
+    .cents-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 22px 0 48px; }
     .c-pill {
       font-size: 0.6rem;
       font-weight: 700;
@@ -293,221 +251,76 @@
       background: rgba(56,189,248,0.06);
     }
 
-    /* ── MARKDOWN RENDER ─────────────────────────── */
+    /* MARKDOWN */
     #report-body { line-height: 1.8; }
-
     #report-body h2 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #38bdf8;
-      margin-top: 56px;
-      margin-bottom: 22px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #38bdf8; margin-top: 56px; margin-bottom: 22px;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06);
     }
     #report-body h2 .sec { font-size: 0.54rem; opacity: 0.32; font-weight: 400; }
-
-    #report-body h3 {
-      font-size: 1.18rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: #fff;
-      margin-top: 28px;
-      margin-bottom: 10px;
-    }
-
-    #report-body p {
-      font-size: 0.97rem;
-      color: rgba(255,255,255,0.68);
-      margin-bottom: 13px;
-      line-height: 1.78;
-    }
-
+    #report-body h3 { font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; color: #fff; margin-top: 28px; margin-bottom: 10px; }
+    #report-body p { font-size: 0.97rem; color: rgba(255,255,255,0.68); margin-bottom: 13px; line-height: 1.78; }
     #report-body strong { color: #fff; font-weight: 700; }
     #report-body em { color: #a78bfa; font-style: italic; }
-
-    #report-body ul, #report-body ol {
-      padding-left: 22px;
-      margin-bottom: 16px;
-    }
-    #report-body li {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 7px;
-      line-height: 1.7;
-    }
-
+    #report-body ul, #report-body ol { padding-left: 22px; margin-bottom: 16px; }
+    #report-body li { font-size: 0.95rem; color: rgba(255,255,255,0.65); margin-bottom: 7px; line-height: 1.7; }
     #report-body blockquote {
-      border-left: 2px solid #6366f1;
-      padding: 14px 20px;
-      margin: 24px 0;
-      background: rgba(99,102,241,0.07);
-      border-radius: 0 10px 10px 0;
+      border-left: 2px solid #6366f1; padding: 14px 20px; margin: 24px 0;
+      background: rgba(99,102,241,0.07); border-radius: 0 10px 10px 0;
     }
-    #report-body blockquote p {
-      color: rgba(255,255,255,0.85);
-      margin: 0;
-      font-size: 0.95rem;
-      font-style: italic;
-    }
-
-    #report-body pre {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 18px 20px;
-      overflow-x: auto;
-      margin: 16px 0;
-    }
-    #report-body code {
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-      font-size: 0.81rem;
-      background: rgba(255,255,255,0.07);
-      padding: 2px 7px;
-      border-radius: 5px;
-      color: #93c5fd;
-    }
-    #report-body pre code {
-      background: none; padding: 0;
-      color: rgba(255,255,255,0.65);
-      font-size: 0.82rem;
-    }
-    #report-body hr {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      margin: 28px 0;
-    }
-
-    /* Streaming cursor */
-    .cur {
-      display: inline-block;
-      width: 2px; height: 1.1em;
-      background: #38bdf8;
-      border-radius: 1px;
-      vertical-align: text-bottom;
-      margin-left: 2px;
-      animation: blink 0.75s steps(1) infinite;
-    }
+    #report-body blockquote p { color: rgba(255,255,255,0.85); margin: 0; font-size: 0.95rem; font-style: italic; }
+    #report-body pre { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 18px 20px; overflow-x: auto; margin: 16px 0; }
+    #report-body code { font-family: monospace; font-size: 0.81rem; background: rgba(255,255,255,0.07); padding: 2px 7px; border-radius: 5px; color: #93c5fd; }
+    #report-body pre code { background: none; padding: 0; color: rgba(255,255,255,0.65); }
+    #report-body hr { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 28px 0; }
+    .cur { display: inline-block; width: 2px; height: 1.1em; background: #38bdf8; border-radius: 1px; vertical-align: text-bottom; margin-left: 2px; animation: blink 0.75s steps(1) infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* Error banner */
-    .err-banner {
-      display: none;
-      margin-top: 14px;
-      padding: 12px 18px;
-      background: rgba(239,68,68,0.09);
-      border: 1px solid rgba(239,68,68,0.22);
-      border-radius: 12px;
-      color: #fca5a5;
-      font-size: 0.8rem;
-      line-height: 1.6;
-      max-width: 660px;
-      width: 100%;
-      text-align: left;
-    }
-
-    /* ── RESPONSIVE ─────────────────────────────── */
     @media (max-width: 580px) {
       h1 { font-size: 2.5rem; }
       .input-row { flex-direction: column; align-items: stretch; }
       .btn-generate { justify-content: center; border-radius: 14px; }
       #url-input { border-radius: 14px; }
-      .gen-steps { align-items: center; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 1 — HERO
-══════════════════════════════════════════ -->
+<!-- SCREEN 1: HERO — LinkedIn URL only -->
 <div id="hero-screen" class="screen active">
   <div class="wordmark">Belovable</div>
-
-  <h1>
-    Become <span class="grad">Belovable</span><br/>
-    for the world by using<br/>
-    your unfair advantage.
-  </h1>
-
-  <p class="hero-sub">
-    Paste your LinkedIn URL. Get your personalized<br/>
-    startup blueprint — powered by AI, built around you.
-  </p>
-
+  <h1>Become <span class="grad">Belovable</span> for the<br/>world by using your<br/>unfair advantage.</h1>
+  <p class="hero-sub">Paste your LinkedIn URL. Get your personalized startup blueprint — free.</p>
   <div class="input-row">
-    <input
-      id="url-input"
-      type="url"
-      placeholder="https://linkedin.com/in/yourname"
-      autocomplete="off"
-      spellcheck="false"
-      inputmode="url"
-    />
+    <input id="url-input" type="url" placeholder="https://linkedin.com/in/yourname" autocomplete="off" spellcheck="false" inputmode="url"/>
     <button class="btn-generate" id="gen-btn" onclick="startAnalysis()">
       Generate
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
     </button>
   </div>
-
   <div id="hero-err" class="err-banner"></div>
-
-  <div class="hero-footer">
-    Your LinkedIn URL is sent to our secure server only.<br/>
-    Nothing is stored. No account required.
-  </div>
+  <div class="hero-footer">Your URL is sent to our secure server only. Nothing is stored. No account required.</div>
 </div>
 
-
-<!-- ══════════════════════════════════════════
-     SCREEN 2 — GENERATING
-══════════════════════════════════════════ -->
+<!-- SCREEN 2: GENERATING -->
 <div id="gen-screen" class="screen">
-  <div class="gen-wrap">
-    <div class="spinner-ring"></div>
-    <div class="gen-status" id="gen-status-label">Reading your profile</div>
-    <div class="gen-sub">This takes about 30–60 seconds…</div>
-
-    <div class="gen-steps">
-      <div class="gen-step active" id="step-1">
-        <div class="step-dot"></div>
-        <span>Fetching LinkedIn profile</span>
-      </div>
-      <div class="gen-step" id="step-2">
-        <div class="step-dot"></div>
-        <span>Mapping unfair advantages</span>
-      </div>
-      <div class="gen-step" id="step-3">
-        <div class="step-dot"></div>
-        <span>Scoring ideas with CENTS framework</span>
-      </div>
-      <div class="gen-step" id="step-4">
-        <div class="step-dot"></div>
-        <span>Building your monetization plan</span>
-      </div>
-      <div class="gen-step" id="step-5">
-        <div class="step-dot"></div>
-        <span>Writing your startup blueprint</span>
-      </div>
-    </div>
+  <div class="spinner-ring"></div>
+  <div class="gen-status" id="gen-label">Reading your profile</div>
+  <div class="gen-sub">This takes about 30–60 seconds…</div>
+  <div class="gen-steps">
+    <div class="gen-step active" id="s1"><div class="step-dot"></div><span>Fetching LinkedIn profile</span></div>
+    <div class="gen-step" id="s2"><div class="step-dot"></div><span>Mapping unfair advantages</span></div>
+    <div class="gen-step" id="s3"><div class="step-dot"></div><span>Scoring with CENTS framework</span></div>
+    <div class="gen-step" id="s4"><div class="step-dot"></div><span>Building monetization plan</span></div>
+    <div class="gen-step" id="s5"><div class="step-dot"></div><span>Writing your blueprint</span></div>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════
-     SCREEN 3 — REPORT
-══════════════════════════════════════════ -->
+<!-- SCREEN 3: REPORT -->
 <div id="report-screen" class="screen">
   <div class="report-inner">
-
     <div class="report-topbar">
       <div>
         <div class="report-wordmark">Belovable · Startup Blueprint</div>
@@ -515,7 +328,6 @@
       </div>
       <button class="btn-restart" onclick="restart()">← New Profile</button>
     </div>
-
     <div class="cents-row">
       <span class="c-pill">C · Control</span>
       <span class="c-pill">E · Entry</span>
@@ -523,36 +335,20 @@
       <span class="c-pill">T · Time</span>
       <span class="c-pill">S · Scale</span>
     </div>
-
     <div id="report-body"></div>
-
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════
-     SCRIPT
-══════════════════════════════════════════ -->
 <script>
-  /**
-   * ⚠️  CONFIGURE THIS:
-   * Replace with your deployed Cloudflare Worker URL.
-   * e.g. "https://belovable.your-subdomain.workers.dev"
-   */
   const WORKER_URL = "https://belovable-api.farhan-techprophet.workers.dev";
 
-  // ─── SCREEN MANAGEMENT ──────────────────────────────────────────────────
-
   function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => {
-      s.classList.remove('active');
-    });
-    const target = document.getElementById(id);
-    // Reset animation
-    target.style.animation = 'none';
-    target.offsetHeight; // reflow
-    target.style.animation = '';
-    target.classList.add('active');
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const t = document.getElementById(id);
+    t.style.animation = 'none';
+    t.offsetHeight;
+    t.style.animation = '';
+    t.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -561,132 +357,76 @@
     document.getElementById('report-body').innerHTML = '';
     document.getElementById('hero-err').style.display = 'none';
     document.getElementById('gen-btn').disabled = false;
-    resetSteps();
+    clearInterval(stepTimer);
     showScreen('hero-screen');
   }
 
-  // ─── STEP INDICATORS ────────────────────────────────────────────────────
-
   let stepTimer;
-
-  function resetSteps() {
-    for (let i = 1; i <= 5; i++) {
-      const el = document.getElementById(`step-${i}`);
-      el.classList.remove('active', 'done');
-    }
-    document.getElementById('step-1').classList.add('active');
-    document.getElementById('gen-status-label').textContent = 'Reading your profile';
-  }
-
-  function advanceSteps() {
-    const labels = [
-      'Reading your profile',
-      'Mapping unfair advantages',
-      'Scoring with CENTS framework',
-      'Building monetization plan',
-      'Writing your blueprint',
-    ];
-    let current = 1;
-
+  function startSteps() {
+    const labels = ['Reading your profile','Mapping unfair advantages','Scoring with CENTS framework','Building monetization plan','Writing your blueprint'];
+    let cur = 1;
+    document.getElementById('s1').classList.add('active');
+    document.getElementById('gen-label').textContent = labels[0];
     stepTimer = setInterval(() => {
-      if (current > 5) { clearInterval(stepTimer); return; }
-
-      const el = document.getElementById(`step-${current}`);
-      if (!el) return;
-
-      // Mark previous done
-      if (current > 1) {
-        document.getElementById(`step-${current - 1}`)?.classList.replace('active', 'done');
-      }
-      el.classList.add('active');
-      document.getElementById('gen-status-label').textContent = labels[current - 1];
-      current++;
-    }, 9000); // advance every 9s
+      if (cur >= 5) { clearInterval(stepTimer); return; }
+      document.getElementById('s' + cur)?.classList.replace('active','done');
+      cur++;
+      document.getElementById('s' + cur)?.classList.add('active');
+      document.getElementById('gen-label').textContent = labels[cur - 1];
+    }, 9000);
   }
-
-  // ─── MARKDOWN → HTML ────────────────────────────────────────────────────
 
   function md2html(md) {
     let h = md;
-
-    // Section headers with numbering
     h = h.replace(/^## (\d+\..+)$/gm, (_, t) => {
-      const num = (t.match(/^(\d+)/) || ['', ''])[1].padStart(2, '0');
-      const rest = t.replace(/^\d+\.\s*/, '');
+      const num = (t.match(/^(\d+)/) || ['',''])[1].padStart(2,'0');
+      const rest = t.replace(/^\d+\.\s*/,'');
       return `<h2><span class="sec">${num}</span>${rest}</h2>`;
     });
-    h = h.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-    h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-    h = h.replace(/^#### (.+)$/gm, '<h3>$1</h3>');
-
-    // Blockquotes
-    h = h.replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>');
-
-    // Code blocks
-    h = h.replace(/```[\w]*\n?([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-
-    // Inline formatting
-    h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    h = h.replace(/__(.+?)__/g,     '<strong>$1</strong>');
-    h = h.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
-    h = h.replace(/`([^`]+)`/g,     '<code>$1</code>');
-
-    // HR
-    h = h.replace(/^---$/gm, '<hr>');
-
-    // Unordered lists
-    h = h.replace(/((?:^[-*•] .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n')
-        .map(l => `<li>${l.replace(/^[-*•] /, '')}</li>`).join('');
+    h = h.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+    h = h.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+    h = h.replace(/^#### (.+)$/gm,'<h3>$1</h3>');
+    h = h.replace(/^> (.+)$/gm,'<blockquote><p>$1</p></blockquote>');
+    h = h.replace(/```[\w]*\n?([\s\S]*?)```/g,'<pre><code>$1</code></pre>');
+    h = h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    h = h.replace(/__(.+?)__/g,'<strong>$1</strong>');
+    h = h.replace(/\*([^*\n]+)\*/g,'<em>$1</em>');
+    h = h.replace(/`([^`]+)`/g,'<code>$1</code>');
+    h = h.replace(/^---$/gm,'<hr>');
+    h = h.replace(/((?:^[-*•] .+\n?)+)/gm, b => {
+      const items = b.trim().split('\n').map(l=>`<li>${l.replace(/^[-*•] /,'')}</li>`).join('');
       return `<ul>${items}</ul>`;
     });
-
-    // Ordered lists
-    h = h.replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n')
-        .map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('');
+    h = h.replace(/((?:^\d+\. .+\n?)+)/gm, b => {
+      const items = b.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('');
       return `<ol>${items}</ol>`;
     });
-
-    // Paragraphs
     h = h.split('\n').map(line => {
       line = line.trim();
       if (!line) return '';
       if (/^<(h[2-6]|ul|ol|li|blockquote|pre|hr)/.test(line)) return line;
       return `<p>${line}</p>`;
     }).join('\n');
-
     return h;
   }
 
-  // ─── EXTRACT NAME FROM URL ───────────────────────────────────────────────
-
   function nameFromUrl(url) {
     try {
-      const path = new URL(url).pathname;
-      const slug = path.replace(/^\/in\//, '').replace(/\/$/, '');
+      const slug = new URL(url).pathname.replace(/^\/in\//,'').replace(/\/$/,'');
       if (!slug) return null;
-      return slug
-        .split('-')
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ');
-    } catch {
-      return null;
-    }
+      return slug.split('-').map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+    } catch { return null; }
   }
 
-  // ─── MAIN ────────────────────────────────────────────────────────────────
-
   async function startAnalysis() {
-    const input  = document.getElementById('url-input');
-    const errEl  = document.getElementById('hero-err');
-    const btn    = document.getElementById('gen-btn');
-    const url    = input.value.trim();
+    const input = document.getElementById('url-input');
+    const errEl = document.getElementById('hero-err');
+    const btn   = document.getElementById('gen-btn');
+    const url   = input.value.trim();
 
     errEl.style.display = 'none';
     input.classList.remove('error');
 
-    // Validate
     if (!url || !url.includes('linkedin.com')) {
       input.classList.add('error');
       setTimeout(() => input.classList.remove('error'), 500);
@@ -696,82 +436,65 @@
       return;
     }
 
-    // Switch to generating screen
     btn.disabled = true;
-    resetSteps();
+    for (let i=1;i<=5;i++) { const el=document.getElementById('s'+i); el.classList.remove('active','done'); }
     showScreen('gen-screen');
-    advanceSteps();
+    startSteps();
 
-    // Set report title from URL slug
     const name = nameFromUrl(url);
-    document.getElementById('report-title').textContent =
-      (name ? name + "'s" : "Your") + " Startup Blueprint";
+    document.getElementById('report-title').textContent = (name ? name+"'s" : "Your") + " Startup Blueprint";
 
     try {
       const resp = await fetch(WORKER_URL, {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ linkedinUrl: url }),
+        body: JSON.stringify({ linkedinUrl: url }),
       });
 
       if (!resp.ok) {
-        const errData = await resp.json().catch(() => ({}));
-        throw new Error(errData.error || `Server error ${resp.status}`);
+        const e = await resp.json().catch(()=>({}));
+        throw new Error(e.error || `Server error ${resp.status}`);
       }
 
-      // Switch to report screen
       clearInterval(stepTimer);
       showScreen('report-screen');
 
-      // Stream SSE
-      const body    = document.getElementById('report-body');
-      const reader  = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let raw = '';
-      let buf = '';
+      const body = document.getElementById('report-body');
+      const reader = resp.body.getReader();
+      const dec = new TextDecoder();
+      let raw = '', buf = '';
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
-        buf += decoder.decode(value, { stream: true });
+        buf += dec.decode(value, { stream: true });
         const lines = buf.split('\n');
         buf = lines.pop();
-
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
           const d = line.slice(6).trim();
           if (d === '[DONE]') continue;
           try {
-            const parsed = JSON.parse(d);
-            if (parsed.text) {
-              raw += parsed.text;
-              body.innerHTML = md2html(raw) + '<span class="cur"></span>';
-            }
-            if (parsed.error) throw new Error(parsed.error);
-          } catch (parseErr) {
-            if (parseErr.message !== 'Unexpected token') throw parseErr;
-          }
+            const p = JSON.parse(d);
+            if (p.text) { raw += p.text; body.innerHTML = md2html(raw) + '<span class="cur"></span>'; }
+            if (p.error) throw new Error(p.error);
+          } catch(pe) { if (pe.message && !pe.message.includes('JSON')) throw pe; }
         }
       }
-
-      // Final render without cursor
       body.innerHTML = md2html(raw);
 
-    } catch (err) {
+    } catch(e) {
       clearInterval(stepTimer);
       showScreen('hero-screen');
       btn.disabled = false;
-      errEl.textContent = '⚠️  ' + (err.message || 'Something went wrong. Please try again.');
+      errEl.textContent = '⚠️ ' + (e.message || 'Something went wrong. Please try again.');
       errEl.style.display = 'block';
     }
   }
 
-  // Enter key support
   document.getElementById('url-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') startAnalysis();
   });
 </script>
-
 </body>
 </html>
